@@ -1,0 +1,3 @@
+create a store
+add it in root(app) component to use state of some variable in anywhere by the help of Provider from react-redux
+create a slice with createslice where we are going to introduce variable a reducer(for changing state) and a action creator
