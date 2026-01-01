@@ -2,6 +2,7 @@ import React,{useRef} from 'react'
 import {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { remove, save, update } from '../redux/toDo.js';
+import './toDoList.css'
 function ToDoList() {
 const {todos}=useSelector((store)=>store.todos)
 const [input,setInput]=useState("")
@@ -30,38 +31,57 @@ const handleUpdation=(todo)=>{
   setId(todo.id)
 }
   return (
-    <div>
-    <form className="App-Form" style={{textAlign:"center"}}>
-    <input 
-      type="text" 
-      placeholder="enter the task" 
-      value={input} onInput={(e) => setInput(e.target.value)} 
-      style={{
-        backgroundColor:"whitesmoke",
-        width:"50%",
-        padding:"0.50%",
-        borderRadius:"10%"
-      }}/>
-    <button 
-      ref={savebtn} 
-      onClick={handleSubmit}>+
-    </button>
-    <button 
-      style={{display:"none"}} 
-      ref={updatebtn} 
-      onClick={handleUpdate}>Update
-    </button>
+  <div className="todo-container">
+    <h2 className="title">📝 My Tasks</h2>
+
+    <form className="todo-form">
+      <input
+        type="text"
+        placeholder="Enter a task..."
+        value={input}
+        onInput={(e) => setInput(e.target.value)}
+        className="todo-input"
+      />
+
+      <button ref={savebtn} onClick={handleSubmit} className="btn add-btn">
+        ➕ Add
+      </button>
+
+      <button
+        ref={updatebtn}
+        onClick={handleUpdate}
+        className="btn update-btn"
+        style={{ display: "none" }}
+      >
+        🔄 Update
+      </button>
     </form>
-   <ul>
-  {
-    todos.map(todo=>(
-      <li key={todo.id}
-      >{todo.text}<button onClick={()=>handleUpdation(todo)}>update</button><button onClick={()=>dispatch(remove({id:todo.id}))}>X</button></li>
-    ))
-  }
-   </ul>
-   </div>
-  )
+
+    <ul className="todo-list">
+      {todos.map((todo) => (
+        <li key={todo.id} className="todo-item">
+          <span>{todo.text}</span>
+
+          <div className="action-btns">
+            <button
+              onClick={() => handleUpdation(todo)}
+              className="btn edit-btn"
+            >
+              ✏️
+            </button>
+            <button
+              onClick={() => dispatch(remove({ id: todo.id }))}
+              className="btn delete-btn"
+            >
+              ❌
+            </button>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
 }
 
 export default ToDoList
